@@ -1,0 +1,19 @@
+{
+  "name": "state-stream",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b ./src/tsconfig.json",
+    "clean": "rm -rf ./build",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "author": "Zim",
+  "license": "MIT",
+  "dependencies": {
+    "@zimtsui/coroutine-locks": "^0.0.15",
+    "events": "^3.3.0"
+  }
+}
