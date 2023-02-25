@@ -9,7 +9,7 @@ class StateStream extends events_1.EventEmitter {
         super();
         this.currentPromise = currentPromise;
         this.before = before;
-        this.state = 0 /* State.BUFFERING */;
+        this.readyState = 0 /* ReadyState.BUFFERING */;
         this.eventBuffer = new event_buffer_1.EventBuffer(ee, event);
         this.errorBuffer = new event_buffer_1.EventBuffer(ee, 'error');
         this.open();
@@ -25,18 +25,19 @@ class StateStream extends events_1.EventEmitter {
         }
         this.eventBuffer.flush();
         this.errorBuffer.flush();
-        this.state = 1 /* State.FLUSHING */;
-        this.emit('state', current);
+        this.readyState = 1 /* ReadyState.FLUSHING */;
+        for (const delta of current)
+            this.emit('delta', delta);
         let started = false;
-        this.eventBuffer.on('event', state => {
-            if (started || (started = this.before(current, state)))
-                this.emit('state', state);
+        this.eventBuffer.on('event', delta => {
+            if (started || (started = this.before(current, delta)))
+                this.emit('delta', delta);
         });
         this.errorBuffer.on('event', error => void this.emit('error', error));
     }
     close() {
-        assert(this.state !== 0 /* State.BUFFERING */);
-        this.state = 2 /* State.DETACHED */;
+        assert(this.readyState !== 0 /* ReadyState.BUFFERING */);
+        this.readyState = 2 /* ReadyState.DETACHED */;
         this.eventBuffer.close();
         this.errorBuffer.close();
     }

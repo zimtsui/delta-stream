@@ -1,22 +1,22 @@
 import { EventEmitter } from "events";
-export declare class StateStream<State> extends EventEmitter {
+export declare class StateStream<Delta> extends EventEmitter {
     private currentPromise;
     private before;
     private eventBuffer;
     private errorBuffer;
-    private state;
-    constructor(currentPromise: Promise<State>, ee: EventEmitter, event: string, before: (state0: State, state: State) => boolean);
+    private readyState;
+    constructor(currentPromise: Promise<Delta[]>, ee: EventEmitter, event: string, before: (state0: Delta[], delta: Delta) => boolean);
     private open;
     close(): void;
 }
-interface Events<State> {
-    state(state: State): void;
+interface Events<Delta> {
+    delta(delta: Delta): void;
     error(error: unknown): void;
 }
-export interface StateStream<State> extends EventEmitter {
-    on<Event extends keyof Events<State>>(event: Event, listener: Events<State>[Event]): this;
-    once<Event extends keyof Events<State>>(event: Event, listener: Events<State>[Event]): this;
-    off<Event extends keyof Events<State>>(event: Event, listener: Events<State>[Event]): this;
-    emit<Event extends keyof Events<State>>(event: Event, ...params: Parameters<Events<State>[Event]>): boolean;
+export interface StateStream<Delta> extends EventEmitter {
+    on<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
+    once<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
+    off<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
+    emit<Event extends keyof Events<Delta>>(event: Event, ...params: Parameters<Events<Delta>[Event]>): boolean;
 }
 export {};
