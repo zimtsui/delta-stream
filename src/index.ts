@@ -10,7 +10,7 @@ const enum ReadyState {
 }
 
 
-export class StateStream<Delta> extends EventEmitter {
+export class DeltaStream<Delta> extends EventEmitter {
 	private eventBuffer: EventBuffer;
 	private errorBuffer: EventBuffer;
 	private readyState = ReadyState.BUFFERING;
@@ -62,7 +62,7 @@ interface Events<Delta> {
 	error(error: unknown): void;
 }
 
-export interface StateStream<Delta> extends EventEmitter {
+export interface DeltaStream<Delta> extends EventEmitter {
 	on<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
 	once<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
 	off<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;

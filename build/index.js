@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StateStream = void 0;
+exports.DeltaStream = void 0;
 const assert = require("assert");
 const events_1 = require("events");
 const event_buffer_1 = require("./event-buffer");
-class StateStream extends events_1.EventEmitter {
+class DeltaStream extends events_1.EventEmitter {
     constructor(currentPromise, ee, event, before) {
         super();
         this.currentPromise = currentPromise;
@@ -42,5 +42,5 @@ class StateStream extends events_1.EventEmitter {
         this.errorBuffer.close();
     }
 }
-exports.StateStream = StateStream;
+exports.DeltaStream = DeltaStream;
 //# sourceMappingURL=index.js.map

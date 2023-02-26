@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-export declare class StateStream<Delta> extends EventEmitter {
+export declare class DeltaStream<Delta> extends EventEmitter {
     private currentPromise;
     private before;
     private eventBuffer;
@@ -13,7 +13,7 @@ interface Events<Delta> {
     delta(delta: Delta): void;
     error(error: unknown): void;
 }
-export interface StateStream<Delta> extends EventEmitter {
+export interface DeltaStream<Delta> extends EventEmitter {
     on<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
     once<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
     off<Event extends keyof Events<Delta>>(event: Event, listener: Events<Delta>[Event]): this;
